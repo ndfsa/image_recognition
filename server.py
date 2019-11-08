@@ -38,11 +38,13 @@ def upload_file():
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return render_template("show.html", file_name='/get/'+filename)
+    f = open('./output/' + filename + '.txt', 'r')
+    content = f.read()
+    return render_template("show.html", file_name='/get/uploads/'+filename, output=content)
 
-@app.route('/get/<filename>')
-def get(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
+@app.route('/get/<directory>/<filename>')
+def get(directory, filename):
+    return send_from_directory(directory,
                                filename)
 
 if __name__ == '__main__':
